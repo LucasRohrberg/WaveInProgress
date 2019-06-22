@@ -2,14 +2,14 @@
 using System;
 using UnityEngine;
 // Original code for Awake(), Start() & Play() by Brackeys, adapted & changed by Lucas Rohrberg
-public class AudioManager : MonoBehaviour
-{
+public class AudioManager : MonoBehaviour {
     public Sound[] sounds;
     public GameObject myPrefab;
     public int sampleRate = 8192;
     [Range(1f, 10f)] public int sampleQuality = 1;
     [Range(1f, 10f)] public int heightModifier = 3;
     private float currentSpectrum;
+    public int distanceBetweenWaves = 50;
     void Awake() {
         // paste user chosen settings to the AudioSource component
         foreach (Sound s in sounds) {
@@ -51,10 +51,10 @@ public class AudioManager : MonoBehaviour
     }
 
     public void turnSpectrumIntoTerrain() {
-        // creates cubes 50 units apart from each other (ceiling, floor)
+        // creates cubes that are distanceBetweenWaves-far apart
         for (int i = 0; i < sampleQuality; i++) {
-            Instantiate(myPrefab, new Vector3(Time.frameCount+90, averageSpectrum(), 0), Quaternion.identity);
-            Instantiate(myPrefab, new Vector3(Time.frameCount+90, averageSpectrum() + 50, 0), Quaternion.identity);
+            Instantiate(myPrefab, new Vector3(Time.frameCount+90, averageSpectrum() - 50, 20), Quaternion.identity);
+            Instantiate(myPrefab, new Vector3(Time.frameCount+90, averageSpectrum() + distanceBetweenWaves * 2, 20), Quaternion.identity);
         }
     }
 }

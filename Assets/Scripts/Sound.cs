@@ -3,6 +3,7 @@ using UnityEngine;
 // Original code by Brackeys, adapted & changed by Lucas Rohrberg
 [System.Serializable]
 public class Sound {
+    // basically a storage / database for the sound presets
     public string name;
     public AudioClip clip;
     public bool loop;

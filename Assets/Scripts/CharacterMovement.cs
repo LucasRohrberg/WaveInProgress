@@ -1,29 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-public class CharacterMovement : MonoBehaviour
-{
+﻿using UnityEngine;
+public class CharacterMovement : MonoBehaviour {
     public float currentHeight = 40f; 
     public bool breaksEnabled = false;
     
     public float acceleration = 0.01f;
     public float heightBeforeBreak = 0f;
     public bool jetpackEnabled = false;
-    private float characterHeight;
+    public float characterHeight;
 
     void Awake() {
         characterHeight = transform.position.y;
     }
 
     public void moveWithGravity(float _maxSpeed, float _breakStrength) {
-        // accelerates over time and enables breaks (like... those of a car) when switching gravity, allowing to turn quicker
+        // height & speed gain steadily increase
         currentHeight -= acceleration;
-        if (3 * acceleration < _maxSpeed && 3 * acceleration > _maxSpeed * - 1) acceleration += acceleration;
-        transform.position = new Vector3(Time.frameCount, currentHeight, -20);
+        if (acceleration + acceleration < _maxSpeed - acceleration && acceleration + acceleration > _maxSpeed - acceleration * - 1) acceleration += acceleration;
+        transform.position = new Vector3(Time.frameCount, currentHeight, 0);
     }
 
     public void moveLikeAJetpack(float _gain) {
         characterHeight = characterHeight + _gain;
-        transform.position = new Vector3(Time.frameCount, characterHeight, -20f);
+        transform.position = new Vector3(Time.frameCount, characterHeight, 0);
     }
 }
